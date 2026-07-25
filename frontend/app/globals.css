@@ -1,0 +1,327 @@
+@import "tailwindcss";
+
+:root {
+  --foreground-rgb: 15, 23, 42;
+  --background-start-rgb: 248, 250, 252;
+  --background-end-rgb: 241, 245, 249;
+}
+
+body {
+  color: #0f172a;
+  background-color: #f8fafc;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Modern Clean Light Theme Styling */
+.bg-slate-950 {
+  background-color: #f8fafc !important;
+}
+
+.bg-slate-900 {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.06), 0 1px 2px -1px rgba(15, 23, 42, 0.04) !important;
+}
+
+.bg-slate-950\/50,
+.bg-slate-950\/60,
+.bg-slate-950\/70,
+.bg-slate-950\/80,
+.bg-slate-950\/90 {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+
+.border-slate-800,
+.border-slate-800\/80,
+.border-slate-800\/60,
+.border-slate-800\/50,
+.border-slate-800\/40 {
+  border-color: #e2e8f0 !important;
+}
+
+.border-slate-700 {
+  border-color: #cbd5e1 !important;
+}
+
+/* Modern High-Contrast Crisp Typography */
+.text-slate-100,
+.text-slate-200 {
+  color: #0f172a !important;
+}
+
+.text-slate-300 {
+  color: #1e293b !important;
+}
+
+.text-slate-400 {
+  color: #64748b !important;
+}
+
+.text-slate-500 {
+  color: #64748b !important;
+}
+
+/* Table Header & Rows */
+.bg-slate-950 {
+  background-color: #f8fafc !important;
+}
+
+.divide-slate-800 > :not([hidden]) ~ :not([hidden]) {
+  border-color: #f1f5f9 !important;
+}
+
+/* Soft Modern Surface Hovers */
+.hover\:bg-slate-800:hover,
+.hover\:bg-slate-800\/50:hover,
+.hover\:bg-slate-800\/40:hover {
+  background-color: #f8fafc !important;
+}
+
+.hover\:bg-slate-700:hover {
+  background-color: #e2e8f0 !important;
+}
+
+/* Crisp White Inputs & Form Fields */
+input, select, textarea {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03) !important;
+}
+
+input::placeholder, textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+input:focus, select:focus, textarea:focus {
+  background-color: #ffffff !important;
+  border-color: #059669 !important;
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15) !important;
+}
+
+/* Modern Emerald Accents */
+.text-emerald-400 {
+  color: #059669 !important;
+}
+
+.bg-emerald-500 {
+  background-color: #059669 !important;
+}
+
+.hover\:bg-emerald-400:hover {
+  background-color: #047857 !important;
+}
+
+.bg-emerald-500\/10 {
+  background-color: #ecfdf5 !important;
+}
+
+.border-emerald-500\/20,
+.border-emerald-500\/30 {
+  border-color: #a7f3d0 !important;
+}
+
+/* Modern Rose Accents */
+.text-rose-400 {
+  color: #e11d48 !important;
+}
+
+.bg-rose-500 {
+  background-color: #e11d48 !important;
+}
+
+.hover\:bg-rose-400:hover {
+  background-color: #be123c !important;
+}
+
+.bg-rose-500\/10 {
+  background-color: #fff1f2 !important;
+}
+
+.border-rose-500\/20,
+.border-rose-500\/30 {
+  border-color: #fecdd3 !important;
+}
+
+/* Modern Teal Accents */
+.text-teal-400,
+.text-teal-300 {
+  color: #0d9488 !important;
+}
+
+.bg-teal-500\/10 {
+  background-color: #f0fdfa !important;
+}
+
+/* Modern Cyan Accents */
+.text-cyan-400,
+.text-cyan-300 {
+  color: #0284c7 !important;
+}
+
+.bg-cyan-500\/10 {
+  background-color: #f0f9ff !important;
+}
+
+/* Modern Amber Accents */
+.text-amber-400 {
+  color: #d97706 !important;
+}
+
+.bg-amber-500\/10 {
+  background-color: #fffbeb !important;
+}
+
+/* Recharts Grid & Axis Colors */
+.recharts-cartesian-grid-line {
+  stroke: #f1f5f9 !important;
+}
+
+.recharts-text {
+  fill: #64748b !important;
+  font-weight: 500 !important;
+}
+
+/* Focus Ring */
+*:focus-visible {
+  outline: 2px solid #059669 !important;
+  outline-offset: 2px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #059669;
+}
+
+/* Smooth Keyframe Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s ease-out forwards;
+}
+
+/* Official A4 Print Media Styles for Laporan Kas RT & Clean Kwitansi Print */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 11pt !important;
+  }
+
+  /* Hide navigation, sidebar, headers, and buttons */
+  aside,
+  header,
+  button,
+  .no-print {
+    display: none !important;
+  }
+
+  .lg\:pl-64 {
+    padding-left: 0 !important;
+  }
+
+  main {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Ensure background colors print cleanly */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Show Print Only Elements */
+  .print-only {
+    display: block !important;
+  }
+
+  table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+  }
+
+  th, td {
+    border: 1px solid #94a3b8 !important;
+    padding: 6px 10px !important;
+    color: #000000 !important;
+  }
+
+  /* Bulletproof Kwitansi Print Isolation Rules */
+  body.kwitansi-printing {
+    background: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  body.kwitansi-printing aside,
+  body.kwitansi-printing header,
+  body.kwitansi-printing main,
+  body.kwitansi-printing .toast-container {
+    display: none !important;
+  }
+
+  body.kwitansi-printing .kwitansi-modal-overlay {
+    position: static !important;
+    background: #ffffff !important;
+    backdrop-filter: none !important;
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  body.kwitansi-printing .kwitansi-modal-box {
+    position: static !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+    max-width: 500px !important;
+    background: #ffffff !important;
+  }
+
+  body.kwitansi-printing .kwitansi-printable-area {
+    display: block !important;
+    margin: 15px auto !important;
+    border: 2px solid #000000 !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+    width: 100% !important;
+    max-width: 480px !important;
+    padding: 24px !important;
+  }
+}
+
+.print-only {
+  display: none;
+}
