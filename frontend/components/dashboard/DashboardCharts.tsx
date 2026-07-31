@@ -11,23 +11,39 @@ import {
   CartesianGrid,
 } from 'recharts';
 
-const MONTHLY_DATA = [
-  { month: 'Januari', Pemasukan: 2100000, Pengeluaran: 1200000 },
-  { month: 'Februari', Pemasukan: 2250000, Pengeluaran: 980000 },
-  { month: 'Maret', Pemasukan: 2000000, Pengeluaran: 1450000 },
-  { month: 'April', Pemasukan: 2400000, Pengeluaran: 1100000 },
-  { month: 'Mei', Pemasukan: 2150000, Pengeluaran: 1600000 },
-  { month: 'Juni', Pemasukan: 2300000, Pengeluaran: 1350000 },
-  { month: 'Juli', Pemasukan: 2250000, Pengeluaran: 1870000 },
-];
+import { useApp } from '../../context/AppContext';
 
 export const DashboardCharts: React.FC = () => {
+  const { transactions } = useApp();
+
+  const currentYear = new Date().getFullYear();
+  const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+  
+  const monthlyData = monthNames.map(month => ({
+    month,
+    Pemasukan: 0,
+    Pengeluaran: 0
+  }));
+
+  transactions.forEach(t => {
+    if (!t.date) return;
+    const dateObj = new Date(t.date);
+    if (dateObj.getFullYear() === currentYear) {
+      const monthIndex = dateObj.getMonth();
+      if (t.type === 'income') {
+        monthlyData[monthIndex].Pemasukan += Number(t.amount) || 0;
+      } else if (t.type === 'expense') {
+        monthlyData[monthIndex].Pengeluaran += Number(t.amount) || 0;
+      }
+    }
+  });
+
   return (
     <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 border-b border-slate-100 pb-4">
         <div>
           <h3 className="font-extrabold text-slate-900 text-base tracking-tight">
-            Grafik Ringkasan Uang Masuk vs Uang Keluar (2026)
+            Grafik Ringkasan Uang Masuk vs Uang Keluar ({currentYear})
           </h3>
           <p className="text-xs text-slate-500 font-medium mt-0.5">Perbandingan total pemasukan dan pengeluaran kas RT setiap bulan</p>
         </div>
@@ -44,7 +60,7 @@ export const DashboardCharts: React.FC = () => {
 
       <div className="h-72 w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={MONTHLY_DATA} margin={{ top: 10, right: 10, left: -15, bottom: 0 }} barGap={8}>
+          <BarChart data={monthlyData} margin={{ top: 10, right: 10, left: -15, bottom: 0 }} barGap={8}>
             <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
             <XAxis dataKey="month" stroke="#64748b" tick={{ fontSize: 12, fontWeight: '600' }} />
             <YAxis stroke="#64748b" tick={{ fontSize: 11 }} tickFormatter={(val) => `${(val / 1000000).toFixed(1)} Jt`} />

@@ -15,14 +15,10 @@ export const CardSummary: React.FC = () => {
     .filter((t) => t.type === 'expense')
     .reduce((sum, t) => sum + t.amount, 0);
 
-  const totalBalance = 15450000 + totalIncome - totalExpense;
-
-  const paidWargaCount = wargaList.filter((w) => w.status === 'Lunas').length;
-  const totalWargaCount = wargaList.length;
-  const percentage = Math.round((paidWargaCount / totalWargaCount) * 100);
+  const totalBalance = totalIncome - totalExpense;
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
       {/* Card 1: Total Saldo */}
       <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs relative overflow-hidden transition-all hover:shadow-md">
         <div className="flex items-center justify-between text-slate-500 mb-2">
@@ -72,27 +68,6 @@ export const CardSummary: React.FC = () => {
         </div>
       </div>
 
-      {/* Card 4: Warga Sudah Lunas */}
-      <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-xs relative overflow-hidden transition-all hover:shadow-md">
-        <div className="flex items-center justify-between text-slate-500 mb-2">
-          <span className="text-xs font-extrabold uppercase tracking-wider text-slate-500">Partisipasi Lunas</span>
-          <div className="p-2.5 rounded-xl bg-sky-50 text-sky-600 border border-sky-200/60">
-            <Users className="w-6 h-6" />
-          </div>
-        </div>
-        <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-          {paidWargaCount} <span className="text-sm font-bold text-slate-500">/ {totalWargaCount} KK</span>
-        </div>
-        <div className="mt-3 space-y-1">
-          <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden border border-slate-200/60">
-            <div
-              className="bg-emerald-600 h-full rounded-full transition-all duration-500"
-              style={{ width: `${percentage}%` }}
-            />
-          </div>
-          <div className="text-[11px] text-emerald-700 font-extrabold text-right">{percentage}% Lunas</div>
-        </div>
-      </div>
     </div>
   );
 };

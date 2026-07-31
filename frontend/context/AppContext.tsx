@@ -10,81 +10,13 @@ import {
   MainTabMenu,
   RtSettings,
   KwitansiData,
+  Bantuan,
+  BantuanStatus,
 } from '../types/kaswarga';
 
-const INITIAL_TRANSACTIONS: Transaction[] = [
-  {
-    id: 'TRX-001',
-    date: '2026-07-24',
-    description: 'Iuran Kas Bulanan RT 05 - Juli 2026',
-    category: 'Iuran Warga',
-    type: 'income',
-    amount: 1750000,
-    recordedBy: 'Bpk. Trianto (Bendahara)',
-    paymentMethod: 'Tunai (Cash)',
-    sourceOrRecipient: 'Warga RT 05',
-  },
-  {
-    id: 'TRX-002',
-    date: '2026-07-22',
-    description: 'Pembelian Lampu LED Jalan & Kabel Pos Kamling',
-    category: 'Perbaikan & Lampu',
-    type: 'expense',
-    amount: 420000,
-    recordedBy: 'Bpk. Trianto (Ketua RT)',
-    paymentMethod: 'Tunai (Cash)',
-    sourceOrRecipient: 'Toko Bangunan Sumber Rejeki',
-  },
-  {
-    id: 'TRX-003',
-    date: '2026-07-20',
-    description: 'Honor Petugas Kebersihan & Gaji Satpam Pos',
-    category: 'Gaji & Operasional',
-    type: 'expense',
-    amount: 1200000,
-    recordedBy: 'Bpk. Trianto (Bendahara)',
-    paymentMethod: 'Tunai (Cash)',
-    sourceOrRecipient: 'Satpam & Petugas Kebersihan',
-  },
-  {
-    id: 'TRX-004',
-    date: '2026-07-15',
-    description: 'Sumbangan Donasi Acara Kerja Bakti Lingkungan',
-    category: 'Donasi',
-    type: 'income',
-    amount: 500000,
-    recordedBy: 'Ibu Ratna',
-    paymentMethod: 'Tunai (Cash)',
-    sourceOrRecipient: 'Ibu Ratna',
-  },
-  {
-    id: 'TRX-005',
-    date: '2026-07-10',
-    description: 'Konsumsi Rapat Warga RT 05',
-    category: 'Kegiatan Warga',
-    type: 'expense',
-    amount: 250000,
-    recordedBy: 'Ibu Maya',
-    paymentMethod: 'Tunai (Cash)',
-    sourceOrRecipient: 'Warung Makan Ibu Maya',
-  },
-];
 
-const INITIAL_WARGA: Warga[] = [
-  { id: 'W-01', name: 'Bpk. Budi Santoso', houseNo: 'Blok A No. 01', phone: '081234567890', status: 'Lunas', lastPaidMonth: 'Juli 2026', amount: 50000, dueDate: '2026-07-10', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80' },
-  { id: 'W-02', name: 'Bpk. Trianto', houseNo: 'Blok A No. 02', phone: '081298765432', status: 'Lunas', lastPaidMonth: 'Juli 2026', amount: 50000, dueDate: '2026-07-10', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80' },
-  { id: 'W-03', name: 'Ibu Siti Aminah', houseNo: 'Blok A No. 03', phone: '081311223344', status: 'Belum Bayar', lastPaidMonth: 'Juni 2026', amount: 50000, dueDate: '2026-07-10', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80' },
-  { id: 'W-04', name: 'Bpk. Agus Pratama', houseNo: 'Blok B No. 01', phone: '081555667788', status: 'Lunas', lastPaidMonth: 'Juli 2026', amount: 50000, dueDate: '2026-07-10', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80' },
-  { id: 'W-05', name: 'Bpk. Rahmat Hidayat', houseNo: 'Blok B No. 02', phone: '081777889900', status: 'Belum Bayar', lastPaidMonth: 'Mei 2026', amount: 100000, dueDate: '2026-06-10', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80' },
-  { id: 'W-06', name: 'Ibu Dewi Lestari', houseNo: 'Blok B No. 03', phone: '081900112233', status: 'Lunas', lastPaidMonth: 'Juli 2026', amount: 50000, dueDate: '2026-07-10', avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80' },
-  { id: 'W-07', name: 'Bpk. Eko Kurniawan', houseNo: 'Blok C No. 01', phone: '082133445566', status: 'Lunas', lastPaidMonth: 'Juli 2026', amount: 50000, dueDate: '2026-07-10', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&auto=format&fit=crop&q=80' },
-  { id: 'W-08', name: 'Bpk. Denny Sujatmiko', houseNo: 'Blok C No. 02', phone: '082244556677', status: 'Belum Bayar', lastPaidMonth: 'April 2026', amount: 150000, dueDate: '2026-05-10', avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80' },
-];
 
-const INITIAL_NOTIFICATIONS: NotificationItem[] = [
-  { id: 'NOTIF-1', title: 'Iuran Diterima', message: 'Bpk. Budi Santoso melunasi iuran bulan Juli 2026', timestamp: '10 min lalu', read: false },
-  { id: 'NOTIF-2', title: 'Tunggakan Iuran', message: '3 warga belum melunasi iuran bulan ini', timestamp: '2 jam lalu', read: false },
-];
+const INITIAL_NOTIFICATIONS: NotificationItem[] = [];
 
 export type UserRole = 'admin' | 'warga';
 
@@ -97,14 +29,16 @@ interface AppContextType {
   setRtSettings: React.Dispatch<React.SetStateAction<RtSettings>>;
   notifications: NotificationItem[];
   toasts: Toast[];
+  bantuanList: Bantuan[];
   searchQuery: string;
   setSearchQuery: (q: string) => void;
 
   // Authentication & Role State
   isAuthenticated: boolean;
   userRole: UserRole;
-  loginAdmin: (password: string) => boolean;
+  isHydrated: boolean;
   loginAsWarga: () => void;
+  loginAdmin: (password: string) => Promise<boolean>;
   logout: () => void;
 
   // Modals state
@@ -118,6 +52,12 @@ interface AppContextType {
   setIsTambahWargaOpen: (o: boolean) => void;
   isKwitansiOpen: boolean;
   setIsKwitansiOpen: (o: boolean) => void;
+  isTambahBantuanOpen: boolean;
+  setIsTambahBantuanOpen: (o: boolean) => void;
+  isSuratPengantarOpen: boolean;
+  setIsSuratPengantarOpen: (o: boolean) => void;
+  suratPengantarData: Bantuan | null;
+  setSuratPengantarData: (data: Bantuan | null) => void;
   kwitansiData: KwitansiData | null;
   setKwitansiData: (data: KwitansiData | null) => void;
 
@@ -139,13 +79,17 @@ interface AppContextType {
   deleteTransaction: (id: string) => void;
   openDetailTransaction: (tx: Transaction) => void;
   openEditTransaction: (tx: Transaction) => void;
-  addWarga: (warga: Omit<Warga, 'id' | 'status' | 'lastPaidMonth' | 'dueDate' | 'avatar'>) => void;
+  addWarga: (warga: Omit<Warga, 'id' | 'status' | 'lastPaidMonth' | 'dueDate'>) => void;
+  deleteWarga: (id: string) => void;
   toggleWargaPayment: (id: string) => void;
   openKwitansiForWarga: (warga: Warga) => void;
   sendReminderWhatsApp: (warga: Warga) => void;
   addToast: (message: string, type?: Toast['type']) => void;
   removeToast: (id: string) => void;
   markAllNotificationsAsRead: () => void;
+  addBantuan: (bantuan: Omit<Bantuan, 'id'>) => void;
+  updateBantuanStatus: (id: string, status: BantuanStatus, keterangan?: string) => void;
+  deleteBantuan: (id: string) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -155,52 +99,55 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [searchQuery, setSearchQuery] = useState('');
 
   // Authentication State
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('kaswarga_is_auth') === 'true';
-    }
-    return false;
-  });
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [userRole, setUserRole] = useState<UserRole>('warga');
+  const [isHydrated, setIsHydrated] = useState(false);
 
-  const [userRole, setUserRole] = useState<UserRole>(() => {
-    if (typeof window !== 'undefined') {
-      return (localStorage.getItem('kaswarga_user_role') as UserRole) || 'warga';
-    }
-    return 'warga';
-  });
+  useEffect(() => {
+    const auth = localStorage.getItem('kaswarga_is_auth') === 'true';
+    const role = (localStorage.getItem('kaswarga_user_role') as UserRole) || 'warga';
+    setIsAuthenticated(auth);
+    setUserRole(role);
+    setIsHydrated(true);
+  }, []);
 
-  // Load initial state from LocalStorage if available
-  const [transactions, setTransactions] = useState<Transaction[]>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('kaswarga_transactions');
-      if (saved) {
-        try {
-          const parsed = JSON.parse(saved);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            const seen = new Set();
-            return parsed.map((t, idx) => {
-              if (seen.has(t.id)) {
-                t.id = `TRX-${Date.now().toString().slice(-4)}-${idx}`;
-              }
-              seen.add(t.id);
-              return t;
-            });
-          }
-        } catch (e) { console.error(e); }
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [wargaList, setWargaList] = useState<Warga[]>([]);
+  const [bantuanList, setBantuanList] = useState<Bantuan[]>([]);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
+
+  // Sync state with Google Sheets on mount
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [resTx, resWarga, resBantuan] = await Promise.all([
+          fetch('/api/sheets/transactions'),
+          fetch('/api/sheets/warga'),
+          fetch('/api/sheets/bantuan')
+        ]);
+        
+        if (resTx.ok) {
+          const txData = await resTx.json();
+          if (txData.length > 0) setTransactions(txData);
+        }
+        
+        if (resWarga.ok) {
+          const wargaData = await resWarga.json();
+          if (wargaData.length > 0) setWargaList(wargaData);
+        }
+
+        if (resBantuan.ok) {
+          const bantuanData = await resBantuan.json();
+          if (bantuanData.length > 0) setBantuanList(bantuanData);
+        }
+      } catch (e) {
+        console.error('Failed to sync from sheets:', e);
+      } finally {
+        setIsDataLoaded(true);
       }
-    }
-    return INITIAL_TRANSACTIONS;
-  });
-
-  const [wargaList, setWargaList] = useState<Warga[]>(() => {
-    if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('kaswarga_warga');
-      if (saved) {
-        try { return JSON.parse(saved); } catch (e) { console.error(e); }
-      }
-    }
-    return INITIAL_WARGA;
-  });
+    };
+    fetchData();
+  }, []);
 
   const [rtSettings, setRtSettings] = useState<RtSettings>(() => {
     if (typeof window !== 'undefined') {
@@ -237,6 +184,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [isPembayaranIuranOpen, setIsPembayaranIuranOpen] = useState(false);
   const [isTambahWargaOpen, setIsTambahWargaOpen] = useState(false);
   const [isKwitansiOpen, setIsKwitansiOpen] = useState(false);
+  const [isTambahBantuanOpen, setIsTambahBantuanOpen] = useState(false);
+  const [isSuratPengantarOpen, setIsSuratPengantarOpen] = useState(false);
+  const [suratPengantarData, setSuratPengantarData] = useState<Bantuan | null>(null);
   const [kwitansiData, setKwitansiData] = useState<KwitansiData | null>(null);
 
   // Success Pop-Up Modal
@@ -250,16 +200,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // Sync state to LocalStorage
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('kaswarga_transactions', JSON.stringify(transactions));
-    }
-  }, [transactions]);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('kaswarga_warga', JSON.stringify(wargaList));
-    }
-  }, [wargaList]);
+    // LocalStorage sync for transactions and warga removed, now using Google Sheets
+  }, []);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -274,15 +216,29 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }
   }, [isAuthenticated, userRole]);
 
-  const loginAdmin = (password: string): boolean => {
-    if (password === 'admin' || password === 'admin123' || password === '123456') {
-      setIsAuthenticated(true);
-      setUserRole('admin');
-      addToast('Selamat Datang Pengurus RT (Akses Penuh Admin)!', 'success');
-      return true;
+  const loginAdmin = async (password: string): Promise<boolean> => {
+    try {
+      const res = await fetch('/api/auth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password })
+      });
+      const data = await res.json();
+      
+      if (data.success) {
+        setIsAuthenticated(true);
+        setUserRole('admin');
+        addToast('Selamat Datang Pengurus RT (Akses Penuh Admin)!', 'success');
+        return true;
+      }
+      
+      addToast('Kata sandi Pengurus RT salah!', 'warning');
+      return false;
+    } catch (e) {
+      console.error(e);
+      addToast('Terjadi kesalahan pada server saat verifikasi kata sandi', 'warning');
+      return false;
     }
-    addToast('Kata sandi Pengurus RT salah!', 'warning');
-    return false;
   };
 
   const loginAsWarga = () => {
@@ -299,7 +255,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const addToast = (message: string, type: Toast['type'] = 'info') => {
-    const id = `toast-${Date.now()}`;
+    const id = `toast-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
     const newToast: Toast = { id, message, type };
     setToasts((prev) => [...prev, newToast]);
     setTimeout(() => removeToast(id), 3500);
@@ -309,7 +265,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setToasts((prev) => prev.filter((t) => t.id !== id));
   };
 
-  const addTransaction = (newTxData: Omit<Transaction, 'id'>) => {
+  const addTransaction = async (newTxData: Omit<Transaction, 'id'>) => {
     if (userRole !== 'admin') {
       addToast('Hanya Pengurus RT yang dapat mencatat transaksi kas!', 'warning');
       return;
@@ -323,9 +279,18 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setLastTransaction(newTx);
     setIsSuccessModalOpen(true);
     addToast(`Transaksi "${newTx.description}" berhasil dicatat!`, 'success');
+    
+    // Sync to Sheets
+    try {
+      await fetch('/api/sheets/transactions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'add', transaction: newTx })
+      });
+    } catch(e) { console.error(e); }
   };
 
-  const updateTransaction = (updatedTx: Transaction) => {
+  const updateTransaction = async (updatedTx: Transaction) => {
     if (userRole !== 'admin') {
       addToast('Hanya Pengurus RT yang dapat mengedit transaksi kas!', 'warning');
       return;
@@ -334,9 +299,18 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       prev.map((t) => (t.id === updatedTx.id ? updatedTx : t))
     );
     addToast(`Transaksi "${updatedTx.description}" berhasil diperbarui!`, 'success');
+    
+    // Sync to Sheets
+    try {
+      await fetch('/api/sheets/transactions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'update', transaction: updatedTx })
+      });
+    } catch(e) { console.error(e); }
   };
 
-  const deleteTransaction = (id: string) => {
+  const deleteTransaction = async (id: string) => {
     if (userRole !== 'admin') {
       addToast('Hanya Pengurus RT yang dapat menghapus transaksi kas!', 'warning');
       return;
@@ -344,6 +318,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const target = transactions.find((t) => t.id === id);
     setTransactions((prev) => prev.filter((t) => t.id !== id));
     addToast(`Transaksi "${target?.description || id}" berhasil dihapus dari kas!`, 'warning');
+    
+    // Sync to Sheets
+    try {
+      await fetch('/api/sheets/transactions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'delete', transaction: { id } })
+      });
+    } catch(e) { console.error(e); }
   };
 
   const openDetailTransaction = (tx: Transaction) => {
@@ -360,27 +343,48 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setIsEditModalOpen(true);
   };
 
-  const addWarga = (newWargaData: Omit<Warga, 'id' | 'status' | 'lastPaidMonth' | 'dueDate' | 'avatar'>) => {
+  const addWarga = async (newWargaData: Omit<Warga, 'id' | 'status' | 'lastPaidMonth' | 'dueDate'>) => {
     if (userRole !== 'admin') {
       addToast('Hanya Pengurus RT yang dapat mendaftarkan warga!', 'warning');
       return;
     }
-    const avatars = [
-      'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80',
-    ];
     const newWarga: Warga = {
       ...newWargaData,
       id: `W-0${wargaList.length + 1}`,
       status: 'Belum Bayar',
       lastPaidMonth: '-',
       dueDate: new Date().toISOString().split('T')[0],
-      avatar: avatars[wargaList.length % avatars.length],
     };
     setWargaList((prev) => [...prev, newWarga]);
     addToast(`Warga baru ${newWarga.name} (${newWarga.houseNo}) berhasil terdaftar!`, 'success');
+    
+    // Sync to Sheets
+    try {
+      await fetch('/api/sheets/warga', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'add', warga: newWarga })
+      });
+    } catch(e) { console.error(e); }
+  };
+
+  const deleteWarga = async (id: string) => {
+    if (userRole !== 'admin') {
+      addToast('Hanya Pengurus RT yang dapat menghapus warga!', 'warning');
+      return;
+    }
+    const target = wargaList.find((w) => w.id === id);
+    setWargaList((prev) => prev.filter((w) => w.id !== id));
+    addToast(`Warga "${target?.name || id}" berhasil dihapus!`, 'warning');
+    
+    // Sync to Sheets
+    try {
+      await fetch('/api/sheets/warga', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'delete', warga: { id } })
+      });
+    } catch(e) { console.error(e); }
   };
 
   const openKwitansiForWarga = (warga: Warga) => {
@@ -390,49 +394,54 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       wargaName: warga.name,
       houseNo: warga.houseNo,
       month: warga.lastPaidMonth === '-' ? 'Juli 2026' : warga.lastPaidMonth,
-      amount: warga.amount || rtSettings.nominalIuran,
+      amount: rtSettings.nominalIuran,
       recordedBy: rtSettings.namaBendahara,
     };
     setKwitansiData(data);
     setIsKwitansiOpen(true);
   };
 
-  const toggleWargaPayment = (id: string) => {
+  const toggleWargaPayment = async (id: string) => {
     if (userRole !== 'admin') {
       addToast('Hanya Pengurus RT yang dapat mengubah status iuran!', 'warning');
       return;
     }
+    
+    let updatedWarga: Warga | null = null;
+
     setWargaList((prev) =>
       prev.map((w) => {
         if (w.id === id) {
           const nextStatus: WargaStatus = w.status === 'Lunas' ? 'Belum Bayar' : 'Lunas';
           const nextMonth = nextStatus === 'Lunas' ? 'Juli 2026' : w.lastPaidMonth;
-          const updated: Warga = { ...w, status: nextStatus, lastPaidMonth: nextMonth };
+          updatedWarga = { ...w, status: nextStatus, lastPaidMonth: nextMonth };
 
           if (nextStatus === 'Lunas') {
             addToast(`Iuran ${w.name} ditandai LUNAS (Juli 2026)!`, 'success');
-            addTransaction({
-              date: new Date().toISOString().split('T')[0],
-              description: `Iuran Bulanan Juli 2026 - ${w.name} (${w.houseNo})`,
-              category: 'Iuran Warga',
-              type: 'income',
-              amount: w.amount || rtSettings.nominalIuran,
-              recordedBy: rtSettings.namaBendahara,
-            });
-            setTimeout(() => openKwitansiForWarga(updated), 400);
+            setTimeout(() => openKwitansiForWarga(updatedWarga!), 400);
           } else {
             addToast(`Status iuran ${w.name} diubah menjadi BELUM BAYAR.`, 'warning');
           }
-          return updated;
+          return updatedWarga;
         }
         return w;
       })
     );
+    
+    if (updatedWarga) {
+      try {
+        await fetch('/api/sheets/warga', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'update', warga: updatedWarga })
+        });
+      } catch(e) { console.error(e); }
+    }
   };
 
   const sendReminderWhatsApp = (warga: Warga) => {
     const text = encodeURIComponent(
-      `Selamat pagi/siang ${warga.name} (${warga.houseNo}), ini pengingat resmi pengurus ${rtSettings.rtRwName} untuk Iuran Kas Bulanan (Nominal Rp ${warga.amount.toLocaleString('id-ID')}). Mohon dapat dilunasi. Terima kasih!`
+      `Selamat pagi/siang ${warga.name} (${warga.houseNo}), ini pengingat resmi pengurus ${rtSettings.rtRwName} untuk Iuran Kas Bulanan (Nominal Rp ${rtSettings.nominalIuran.toLocaleString('id-ID')}). Mohon dapat dilunasi. Terima kasih!`
     );
     window.open(`https://wa.me/${warga.phone.replace(/[^0-9]/g, '')}?text=${text}`, '_blank');
     addToast(`Pesan pengingat WA terkirim ke ${warga.name}`, 'success');
@@ -440,6 +449,72 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const markAllNotificationsAsRead = () => {
     setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
+  };
+
+  const addBantuan = async (newBantuanData: Omit<Bantuan, 'id'>) => {
+    if (userRole !== 'admin') {
+      addToast('Hanya Pengurus RT yang dapat menambah data bantuan!', 'warning');
+      return;
+    }
+    const id = `B-${Date.now().toString().slice(-4)}-${Math.floor(Math.random() * 100)}`;
+    const newBantuan: Bantuan = { ...newBantuanData, id };
+    
+    setBantuanList((prev) => [newBantuan, ...prev]);
+    addToast(`Usulan Bantuan "${newBantuan.jenisBantuan}" untuk ${newBantuan.wargaName} berhasil dicatat!`, 'success');
+    
+    try {
+      await fetch('/api/sheets/bantuan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'add', bantuan: newBantuan })
+      });
+    } catch(e) { console.error(e); }
+  };
+
+  const updateBantuanStatus = async (id: string, status: BantuanStatus, keterangan?: string) => {
+    if (userRole !== 'admin') {
+      addToast('Hanya Pengurus RT yang dapat mengubah status bantuan!', 'warning');
+      return;
+    }
+    
+    let updatedBantuan: Bantuan | null = null;
+    setBantuanList((prev) =>
+      prev.map((b) => {
+        if (b.id === id) {
+          updatedBantuan = { ...b, status, keterangan: keterangan ?? b.keterangan };
+          return updatedBantuan;
+        }
+        return b;
+      })
+    );
+    
+    if (updatedBantuan) {
+      addToast(`Status Bantuan berhasil diubah menjadi ${status}!`, 'success');
+      try {
+        await fetch('/api/sheets/bantuan', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'update', bantuan: updatedBantuan })
+        });
+      } catch(e) { console.error(e); }
+    }
+  };
+
+  const deleteBantuan = async (id: string) => {
+    if (userRole !== 'admin') {
+      addToast('Hanya Pengurus RT yang dapat menghapus data bantuan!', 'warning');
+      return;
+    }
+    setBantuanList((prev) => prev.filter((b) => b.id !== id));
+    addToast('Data Bantuan berhasil dihapus!', 'warning');
+    
+    try {
+      await fetch('/api/sheets/bantuan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'delete', bantuan: { id } })
+      });
+    } catch(e) { console.error(e); }
   };
 
   return (
@@ -457,6 +532,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setSearchQuery,
         isAuthenticated,
         userRole,
+        isHydrated,
         loginAdmin,
         loginAsWarga,
         logout,
@@ -470,6 +546,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setIsTambahWargaOpen,
         isKwitansiOpen,
         setIsKwitansiOpen,
+        isTambahBantuanOpen,
+        setIsTambahBantuanOpen,
+        isSuratPengantarOpen,
+        setIsSuratPengantarOpen,
+        suratPengantarData,
+        setSuratPengantarData,
         kwitansiData,
         setKwitansiData,
         isSuccessModalOpen,
@@ -486,12 +568,17 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         openDetailTransaction,
         openEditTransaction,
         addWarga,
+        deleteWarga,
         toggleWargaPayment,
         openKwitansiForWarga,
         sendReminderWhatsApp,
         addToast,
         removeToast,
         markAllNotificationsAsRead,
+        bantuanList,
+        addBantuan,
+        updateBantuanStatus,
+        deleteBantuan,
       }}
     >
       {children}

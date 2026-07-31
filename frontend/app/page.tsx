@@ -12,7 +12,6 @@ import { LoginScreen } from '../components/auth/LoginScreen';
 import { CardSummary } from '../components/dashboard/CardSummary';
 import { DashboardCharts } from '../components/dashboard/DashboardCharts';
 import { RecentTransactions } from '../components/dashboard/RecentTransactions';
-import { DaftarWargaBelumBayar } from '../components/dashboard/DaftarWargaBelumBayar';
 
 // Data Warga Modul MVP
 import { DataWargaView } from '../components/master/DataWargaView';
@@ -21,7 +20,6 @@ import { TambahWargaModal } from '../components/master/TambahWargaModal';
 // Transaksi & Kwitansi Modals MVP
 import { KasMasukModal } from '../components/transaksi/KasMasukModal';
 import { KasKeluarModal } from '../components/transaksi/KasKeluarModal';
-import { PembayaranIuranModal } from '../components/transaksi/PembayaranIuranModal';
 import { KwitansiModal } from '../components/common/KwitansiModal';
 import { DetailTransaksiModal } from '../components/transaksi/DetailTransaksiModal';
 import { EditTransaksiModal } from '../components/transaksi/EditTransaksiModal';
@@ -32,9 +30,16 @@ import { LaporanView } from '../components/laporan/LaporanView';
 // Pengaturan Modul MVP
 import { PengaturanView } from '../components/pengaturan/PengaturanView';
 
+// Bantuan Sosial Modul
+import { BantuanSosialView } from '../components/bantuan/BantuanSosialView';
+import { TambahBantuanModal } from '../components/bantuan/TambahBantuanModal';
+import { SuratPengantarModal } from '../components/bantuan/SuratPengantarModal';
+
 function MainAppContent() {
-  const { activeTab, isAuthenticated } = useApp();
+  const { activeTab, isAuthenticated, isHydrated } = useApp();
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+
+  if (!isHydrated) return null;
 
   // Guard: Show Login Screen if not authenticated
   if (!isAuthenticated) {
@@ -57,10 +62,7 @@ function MainAppContent() {
             {/* 2. Ringkasan Chart Pemasukan vs Pengeluaran */}
             <DashboardCharts />
 
-            {/* 3. Daftar Warga Belum Bayar + Pengingat WA */}
-            <DaftarWargaBelumBayar />
-
-            {/* 4. Riwayat Transaksi Terbaru */}
+            {/* 3. Riwayat Transaksi Terbaru */}
             <RecentTransactions />
           </div>
         );
@@ -77,6 +79,9 @@ function MainAppContent() {
 
       case 'laporan':
         return <LaporanView />;
+
+      case 'bantuan':
+        return <BantuanSosialView />;
 
       case 'pengaturan':
         return <PengaturanView />;
@@ -105,8 +110,9 @@ function MainAppContent() {
       {/* Modals & Toast Alerts */}
       <KasMasukModal />
       <KasKeluarModal />
-      <PembayaranIuranModal />
       <TambahWargaModal />
+      <TambahBantuanModal />
+      <SuratPengantarModal />
       <KwitansiModal />
       <SuccessModal />
       <DetailTransaksiModal />

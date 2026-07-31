@@ -34,14 +34,14 @@ export const DaftarWargaBelumBayar: React.FC = () => {
               <th className="py-3.5 px-4">Nama Warga & Rumah</th>
               <th className="py-3.5 px-4">Telepon / WA</th>
               <th className="py-3.5 px-4">Terakhir Bayar</th>
-              <th className="py-3.5 px-4 text-right">Nominal Iuran</th>
+
               <th className="py-3.5 px-4 text-center">Aksi Cepat</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
             {unpaidList.length === 0 ? (
               <tr>
-                <td colSpan={5} className="py-8 text-center text-slate-500 font-bold">
+                <td colSpan={4} className="py-8 text-center text-slate-500 font-bold">
                   Semua warga telah melunasi iuran bulan ini! 🎉
                 </td>
               </tr>
@@ -50,7 +50,6 @@ export const DaftarWargaBelumBayar: React.FC = () => {
                 <tr key={w.id} className="hover:bg-slate-50/80 transition-colors">
                   <td className="py-3.5 px-4">
                     <div className="flex items-center gap-3">
-                      <img src={w.avatar} alt={w.name} className="w-10 h-10 rounded-xl object-cover border border-slate-200 shrink-0" />
                       <div>
                         <div className="font-extrabold text-slate-900 text-sm">{w.name}</div>
                         <div className="text-xs text-emerald-600 font-extrabold">{w.houseNo}</div>
@@ -59,9 +58,7 @@ export const DaftarWargaBelumBayar: React.FC = () => {
                   </td>
                   <td className="py-3.5 px-4 font-mono text-xs font-semibold text-slate-600">{w.phone}</td>
                   <td className="py-3.5 px-4 font-semibold text-slate-700">{w.lastPaidMonth}</td>
-                  <td className="py-3.5 px-4 text-right font-extrabold text-rose-600 text-sm">
-                    Rp {w.amount.toLocaleString('id-ID')}
-                  </td>
+
                   <td className="py-3.5 px-4 text-center">
                     <div className="flex items-center justify-center gap-2">
                       <button

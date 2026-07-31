@@ -23,9 +23,20 @@ export interface Warga {
   phone: string;
   status: WargaStatus;
   lastPaidMonth: string;
-  amount: number;
   dueDate: string;
-  avatar: string;
+}
+
+export type BantuanStatus = 'Diusulkan' | 'Disetujui Kelurahan' | 'Ditolak' | 'Diterima Warga';
+
+export interface Bantuan {
+  id: string;
+  wargaId?: string;
+  wargaName: string;
+  houseNo: string;
+  jenisBantuan: string;
+  status: BantuanStatus;
+  tanggalUsulan: string;
+  keterangan?: string;
 }
 
 export interface NotificationItem {
@@ -43,7 +54,7 @@ export interface Toast {
   timestamp?: string;
 }
 
-export type MainTabMenu = 'dashboard' | 'warga' | 'transaksi' | 'laporan' | 'pengaturan';
+export type MainTabMenu = 'dashboard' | 'warga' | 'transaksi' | 'laporan' | 'pengaturan' | 'bantuan';
 
 export interface RtSettings {
   rtRwName: string;

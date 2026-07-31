@@ -10,7 +10,6 @@ export const TambahWargaModal: React.FC = () => {
   const [name, setName] = useState('');
   const [houseNo, setHouseNo] = useState('');
   const [phone, setPhone] = useState('');
-  const [amount, setAmount] = useState(rtSettings.nominalIuran.toString());
 
   if (!isTambahWargaOpen) return null;
 
@@ -22,7 +21,6 @@ export const TambahWargaModal: React.FC = () => {
       name,
       houseNo,
       phone: phone || '081200000000',
-      amount: parseFloat(amount) || rtSettings.nominalIuran,
     });
 
     setIsTambahWargaOpen(false);
@@ -83,31 +81,17 @@ export const TambahWargaModal: React.FC = () => {
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">
-                No. WhatsApp / Telepon
-              </label>
-              <input
-                type="text"
-                placeholder="08123456789"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-3 text-xs text-slate-900 font-mono font-semibold focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/15"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">
-                Nominal Iuran (Rp)
-              </label>
-              <input
-                type="number"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-3 text-sm text-slate-900 font-mono font-extrabold focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/15"
-              />
-            </div>
+          <div>
+            <label className="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">
+              No. WhatsApp / Telepon
+            </label>
+            <input
+              type="text"
+              placeholder="08123456789"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-3 text-xs text-slate-900 font-mono font-semibold focus:outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/15"
+            />
           </div>
 
           {/* Action Buttons */}

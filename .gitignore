@@ -34,6 +34,7 @@ lerna-debug.log*
 .env.development
 .env.test
 .env.production
+google-credentials.json
 
 # vercel
 .vercel

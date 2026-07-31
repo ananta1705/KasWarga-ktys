@@ -53,16 +53,6 @@ export const PengaturanView: React.FC = () => {
             />
           </div>
 
-          <div>
-            <label className="block text-slate-700 font-extrabold mb-1">Nominal Iuran Bulanan Per KK (Rp)</label>
-            <input
-              type="number"
-              required
-              value={rtSettings.nominalIuran}
-              onChange={(e) => setRtSettings({ ...rtSettings, nominalIuran: parseFloat(e.target.value) || 0 })}
-              className="w-full bg-white border border-slate-200 rounded-xl px-3.5 py-2.5 text-slate-900 text-sm font-mono font-extrabold focus:outline-none focus:border-emerald-600"
-            />
-          </div>
         </div>
 
         <div className="pt-3 border-t border-slate-100 pb-1">

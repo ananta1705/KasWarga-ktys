@@ -13,7 +13,7 @@ export const PreviewExcelModal: React.FC<PreviewExcelModalProps> = ({ isOpen, on
   const { transactions, rtSettings, addToast } = useApp();
 
   const [title, setTitle] = useState('LAPORAN PERTANGGUNGJAWABAN KEUANGAN KAS RT');
-  const [periode, setPeriode] = useState('Juli 2026');
+  const [periode, setPeriode] = useState(new Date().toLocaleString('id-ID', { month: 'long', year: 'numeric' }));
   const [namaKetuaRt, setNamaKetuaRt] = useState(rtSettings.namaKetuaRt);
   const [namaBendahara, setNamaBendahara] = useState(rtSettings.namaBendahara);
   const [catatanTambahan, setCatatanTambahan] = useState(
@@ -31,7 +31,7 @@ export const PreviewExcelModal: React.FC<PreviewExcelModalProps> = ({ isOpen, on
 
   const totalIncome = transactions.filter((t) => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
   const totalExpense = transactions.filter((t) => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
-  const saldoAkhir = 15450000 + totalIncome - totalExpense;
+  const saldoAkhir = totalIncome - totalExpense;
 
   const handleDownloadFormattedExcel = () => {
     const tableRows = transactions
@@ -126,8 +126,9 @@ export const PreviewExcelModal: React.FC<PreviewExcelModalProps> = ({ isOpen, on
 
     const blob = new Blob([excelTemplate], { type: 'application/vnd.ms-excel;charset=utf-8' });
     const link = document.createElement('a');
+    const safePeriode = periode.replace(/[^a-zA-Z0-9]/g, '_');
     link.href = URL.createObjectURL(blob);
-    link.download = `Laporan_Kas_Rapi_${rtSettings.rtRwName.replace(/[^a-zA-Z0-9]/g, '_')}_Juli_2026.xls`;
+    link.download = `Laporan_Kas_Rapi_${rtSettings.rtRwName.replace(/[^a-zA-Z0-9]/g, '_')}_${safePeriode}.xls`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

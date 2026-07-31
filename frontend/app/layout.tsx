@@ -4,6 +4,16 @@ import './globals.css';
 export const metadata: Metadata = {
   title: 'KasWarga - Sistem Informasi Kas & Keuangan Warga',
   description: 'Platform transparansi keuangan kas warga RT/RW, iuran bulanan, serta pencatatan pemasukan dan pengeluaran.',
+  manifest: '/manifest.json',
+  themeColor: '#059669',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'KasWarga',
+  },
+  formatDetection: {
+    telephone: false,
+  },
 };
 
 export default function RootLayout({

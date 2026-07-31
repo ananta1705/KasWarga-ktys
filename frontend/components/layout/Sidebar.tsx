@@ -14,6 +14,7 @@ import {
   LogOut,
   Shield,
   User,
+  HeartHandshake,
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -24,13 +25,12 @@ interface SidebarProps {
 export const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, setIsMobileOpen }) => {
   const { activeTab, setActiveTab, wargaList, rtSettings, userRole, logout } = useApp();
 
-  const unpaidCount = wargaList.filter((w) => w.status === 'Belum Bayar').length;
-
-  const menuItems = [
+  const menuItems: { id: MainTabMenu; label: string; icon: any; badge?: string }[] = [
     { id: 'dashboard' as MainTabMenu, label: 'Dashboard Utama', icon: LayoutDashboard },
-    { id: 'warga' as MainTabMenu, label: 'Data Warga', icon: Users, badge: unpaidCount > 0 ? `${unpaidCount} Belum` : undefined },
+    { id: 'warga' as MainTabMenu, label: 'Data Warga', icon: Users },
     { id: 'transaksi' as MainTabMenu, label: 'Catat Kas', icon: Receipt },
     { id: 'laporan' as MainTabMenu, label: 'Laporan Kas', icon: FileText },
+    { id: 'bantuan' as MainTabMenu, label: 'Bantuan Sosial', icon: HeartHandshake },
     { id: 'pengaturan' as MainTabMenu, label: 'Pengaturan RT', icon: Settings },
   ];
 

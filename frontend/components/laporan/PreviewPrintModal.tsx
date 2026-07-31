@@ -13,7 +13,7 @@ export const PreviewPrintModal: React.FC<PreviewPrintModalProps> = ({ isOpen, on
   const { transactions, rtSettings } = useApp();
 
   const [title, setTitle] = useState('LAPORAN PERTANGGUNGJAWABAN KEUANGAN KAS RT');
-  const [periode, setPeriode] = useState('Juli 2026');
+  const [periode, setPeriode] = useState(new Date().toLocaleString('id-ID', { month: 'long', year: 'numeric' }));
   const [namaKetuaRt, setNamaKetuaRt] = useState(rtSettings.namaKetuaRt);
   const [namaBendahara, setNamaBendahara] = useState(rtSettings.namaBendahara);
   const [catatanTambahan, setCatatanTambahan] = useState(
@@ -31,15 +31,19 @@ export const PreviewPrintModal: React.FC<PreviewPrintModalProps> = ({ isOpen, on
 
   const totalIncome = transactions.filter((t) => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
   const totalExpense = transactions.filter((t) => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
-  const saldoAkhir = 15450000 + totalIncome - totalExpense;
+  const saldoAkhir = totalIncome - totalExpense;
 
   const handleExecutePrint = () => {
+    document.body.classList.add('laporan-printing');
     window.print();
+    setTimeout(() => {
+      document.body.classList.remove('laporan-printing');
+    }, 1000);
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-xs animate-fade-in no-print">
-      <div className="bg-white border border-slate-200 rounded-3xl max-w-4xl w-full p-6 shadow-2xl space-y-6 max-h-[92vh] overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-xs animate-fade-in laporan-modal-overlay">
+      <div className="bg-white border border-slate-200 rounded-3xl max-w-4xl w-full p-6 shadow-2xl space-y-6 max-h-[92vh] overflow-y-auto laporan-modal-box">
         {/* Header Modal */}
         <div className="flex items-center justify-between border-b border-slate-100 pb-4">
           <div className="flex items-center gap-3">
@@ -61,9 +65,9 @@ export const PreviewPrintModal: React.FC<PreviewPrintModalProps> = ({ isOpen, on
         </div>
 
         {/* 2 Column Layout: Edit Panel & Live A4 Preview */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 laporan-content-grid">
           {/* Left Edit Controls */}
-          <div className="space-y-4 text-xs bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
+          <div className="space-y-4 text-xs bg-slate-50 p-4 rounded-2xl border border-slate-200/80 laporan-edit-panel">
             <div className="font-extrabold text-slate-900 text-sm flex items-center gap-1.5 border-b border-slate-200 pb-2">
               <Edit3 className="w-4 h-4 text-emerald-600" /> Edit Rincian Dokumen
             </div>
@@ -120,7 +124,7 @@ export const PreviewPrintModal: React.FC<PreviewPrintModalProps> = ({ isOpen, on
           </div>
 
           {/* Right Live Preview Box */}
-          <div className="md:col-span-2 bg-white border border-slate-300 rounded-2xl p-6 shadow-md text-slate-900 space-y-5 text-xs font-sans">
+          <div className="md:col-span-2 bg-white border border-slate-300 rounded-2xl p-6 shadow-md text-slate-900 space-y-5 text-xs font-sans laporan-printable-area">
             {/* Kop Surat */}
             <div className="border-b-2 border-slate-900 pb-3 text-center space-y-1">
               <h1 className="text-base font-extrabold uppercase tracking-tight text-slate-900">{title}</h1>
@@ -156,7 +160,7 @@ export const PreviewPrintModal: React.FC<PreviewPrintModalProps> = ({ isOpen, on
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-200">
-                  {transactions.slice(0, 5).map((t) => (
+                  {transactions.map((t) => (
                     <tr key={t.id}>
                       <td className="p-2 border-r border-slate-200 font-mono">{t.date}</td>
                       <td className="p-2 border-r border-slate-200 font-extrabold">{t.description}</td>
@@ -168,11 +172,6 @@ export const PreviewPrintModal: React.FC<PreviewPrintModalProps> = ({ isOpen, on
                   ))}
                 </tbody>
               </table>
-              {transactions.length > 5 && (
-                <div className="text-[10px] text-slate-500 italic mt-1 text-center">
-                  + {transactions.length - 5} transaksi lainnya akan disertakan pada lembar cetak full.
-                </div>
-              )}
             </div>
 
             {catatanTambahan && (
@@ -197,7 +196,7 @@ export const PreviewPrintModal: React.FC<PreviewPrintModalProps> = ({ isOpen, on
         </div>
 
         {/* Action Buttons */}
-        <div className="pt-4 flex justify-between items-center border-t border-slate-100">
+        <div className="pt-4 flex justify-between items-center border-t border-slate-100 laporan-footer-actions">
           <button
             onClick={onClose}
             className="px-4 py-2.5 rounded-xl text-xs font-extrabold text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all cursor-pointer"

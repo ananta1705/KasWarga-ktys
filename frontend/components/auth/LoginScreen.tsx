@@ -2,26 +2,29 @@
 
 import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
-import { Shield, Eye, EyeOff, Lock, User, CheckCircle2, ArrowRight, Building2 } from 'lucide-react';
+import { Eye, EyeOff, Lock, CheckCircle2, ArrowRight, Building2, Loader2 } from 'lucide-react';
 
 export const LoginScreen: React.FC = () => {
-  const { loginAdmin, loginAsWarga, rtSettings } = useApp();
+  const { loginAdmin, rtSettings } = useApp();
 
-  const [loginType, setLoginType] = useState<'admin' | 'warga'>('admin');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleAdminSubmit = (e: React.FormEvent) => {
+  const handleAdminSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!password) {
       setErrorMsg('Masukkan kata sandi Pengurus RT');
       return;
     }
 
-    const success = loginAdmin(password);
+    setIsLoading(true);
+    const success = await loginAdmin(password);
+    setIsLoading(false);
+    
     if (!success) {
-      setErrorMsg('Kata sandi salah. Gunakan: admin123');
+      setErrorMsg('Kata sandi salah.');
     } else {
       setErrorMsg('');
     }
@@ -43,45 +46,12 @@ export const LoginScreen: React.FC = () => {
 
         {/* Main Card */}
         <div className="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-xl space-y-6">
-          {/* Role Switcher Tabs */}
-          <div className="grid grid-cols-2 p-1 bg-slate-100 rounded-2xl border border-slate-200 text-xs font-extrabold">
-            <button
-              type="button"
-              onClick={() => {
-                setLoginType('admin');
-                setErrorMsg('');
-              }}
-              className={`py-2.5 rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
-                loginType === 'admin'
-                  ? 'bg-white text-emerald-700 shadow-sm'
-                  : 'text-slate-500 hover:text-slate-900'
-              }`}
-            >
-              <Shield className="w-4 h-4" /> Pengurus RT
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setLoginType('warga');
-                setErrorMsg('');
-              }}
-              className={`py-2.5 rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
-                loginType === 'warga'
-                  ? 'bg-white text-emerald-700 shadow-sm'
-                  : 'text-slate-500 hover:text-slate-900'
-              }`}
-            >
-              <User className="w-4 h-4" /> Warga / Publik
-            </button>
-          </div>
-
-          {loginType === 'admin' ? (
-            /* Admin Form */
-            <form onSubmit={handleAdminSubmit} className="space-y-4 text-xs">
-              <div className="space-y-1 text-left">
-                <span className="text-xs font-black text-slate-900 uppercase tracking-wider">Akses Pengurus RT</span>
-                <p className="text-[11px] text-slate-500 font-medium">Masuk untuk mengelola kas, iuran warga, & cetak dokumen</p>
-              </div>
+          {/* Admin Form */}
+          <form onSubmit={handleAdminSubmit} className="space-y-4 text-xs">
+            <div className="space-y-1 text-left">
+              <span className="text-xs font-black text-slate-900 uppercase tracking-wider">Akses Pengurus RT</span>
+              <p className="text-[11px] text-slate-500 font-medium">Masuk untuk mengelola kas, iuran warga, & cetak dokumen</p>
+            </div>
 
               <div>
                 <label className="block text-xs font-extrabold text-slate-700 uppercase tracking-wider mb-1.5">
@@ -94,7 +64,7 @@ export const LoginScreen: React.FC = () => {
                   <input
                     type={showPassword ? 'text' : 'password'}
                     required
-                    placeholder="Masukkan kata sandi (default: admin123)"
+                    placeholder="Masukkan kata sandi"
                     value={password}
                     onChange={(e) => {
                       setPassword(e.target.value);
@@ -113,49 +83,24 @@ export const LoginScreen: React.FC = () => {
                 {errorMsg && <p className="text-rose-600 font-bold text-xs mt-1.5 animate-fade-in">{errorMsg}</p>}
               </div>
 
-              <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-[11px] text-emerald-800 font-medium space-y-0.5">
-                <div className="font-bold flex items-center gap-1">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> Kata Sandi Default Pengurus:
-                </div>
-                <div>Gunakan password: <code className="font-bold bg-white px-1.5 py-0.5 rounded border border-emerald-300">admin123</code></div>
-              </div>
+
 
               <button
                 type="submit"
-                className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold rounded-xl text-xs sm:text-sm shadow-md shadow-emerald-600/20 flex items-center justify-center gap-2 cursor-pointer transition-all"
+                disabled={isLoading}
+                className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold rounded-xl text-xs sm:text-sm shadow-md shadow-emerald-600/20 flex items-center justify-center gap-2 cursor-pointer transition-all disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                Masuk Sebagai Pengurus <ArrowRight className="w-4 h-4" />
+                {isLoading ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" /> Sedang Memeriksa...
+                  </>
+                ) : (
+                  <>
+                    Masuk Sebagai Pengurus <ArrowRight className="w-4 h-4" />
+                  </>
+                )}
               </button>
             </form>
-          ) : (
-            /* Warga / Public Transparency Mode */
-            <div className="space-y-5 text-xs text-left">
-              <div className="space-y-1">
-                <span className="text-xs font-black text-slate-900 uppercase tracking-wider">Akses Transparansi Warga</span>
-                <p className="text-xs text-slate-500 font-medium">Lihat saldo kas RT, grafik laporan keuangan, dan status iuran secara transparan</p>
-              </div>
-
-              <div className="p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-2 text-slate-700">
-                <div className="font-bold text-slate-900 flex items-center gap-1.5 text-xs">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600" /> Hak Akses Warga / Publik:
-                </div>
-                <ul className="list-disc list-inside space-y-1 text-[11px] text-slate-600 font-medium">
-                  <li>Melihat Grafik & Saldo Kas RT Transparan</li>
-                  <li>Melihat Status Pelunasan Iuran Warga</li>
-                  <li>Melihat Catatan Transaksi Masuk & Keluar</li>
-                  <li>Mode Aman (Read-Only) Terproteksi</li>
-                </ul>
-              </div>
-
-              <button
-                type="button"
-                onClick={loginAsWarga}
-                className="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-extrabold rounded-xl text-xs sm:text-sm shadow-md flex items-center justify-center gap-2 cursor-pointer transition-all"
-              >
-                Lihat Laporan Kas Warga <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-          )}
         </div>
 
         {/* Footer */}

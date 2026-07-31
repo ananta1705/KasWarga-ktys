@@ -22,6 +22,8 @@ export const LaporanView: React.FC = () => {
   const [isPreviewPrintOpen, setIsPreviewPrintOpen] = useState(false);
   const [isPreviewExcelOpen, setIsPreviewExcelOpen] = useState(false);
 
+  const currentPeriode = new Date().toLocaleString('id-ID', { month: 'long', year: 'numeric' });
+
   const filtered = transactions.filter((t) => {
     if (filterType === 'INCOME') return t.type === 'income';
     if (filterType === 'EXPENSE') return t.type === 'expense';
@@ -30,7 +32,7 @@ export const LaporanView: React.FC = () => {
 
   const totalIncome = transactions.filter((t) => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
   const totalExpense = transactions.filter((t) => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
-  const saldoAkhir = 15450000 + totalIncome - totalExpense;
+  const saldoAkhir = totalIncome - totalExpense;
 
   const handleDeleteConfirm = () => {
     if (deleteTarget) {
@@ -45,7 +47,7 @@ export const LaporanView: React.FC = () => {
       <div className="print-only mb-6 border-b-2 border-slate-900 pb-4 text-center space-y-1">
         <h1 className="text-xl font-extrabold uppercase tracking-tight">LAPORAN PERTANGGUNGJAWABAN KEUANGAN KAS RT</h1>
         <h2 className="text-base font-bold text-slate-800 uppercase">{rtSettings.rtRwName} • {rtSettings.kelurahan}</h2>
-        <p className="text-xs text-slate-600">Periode: Juli 2026 • Dicetak Tanggal: {new Date().toLocaleDateString('id-ID')}</p>
+        <p className="text-xs text-slate-600">Periode: {currentPeriode} • Dicetak Tanggal: {new Date().toLocaleDateString('id-ID')}</p>
       </div>
 
       {/* Screen Header Controls */}
@@ -54,7 +56,7 @@ export const LaporanView: React.FC = () => {
           <h2 className="text-xl font-extrabold text-slate-900 flex items-center gap-2 tracking-tight">
             <FileText className="w-6 h-6 text-emerald-600" /> Laporan Keuangan Kas {rtSettings.rtRwName}
           </h2>
-          <p className="text-xs text-slate-500 font-medium mt-0.5">Ringkasan Laporan Pertanggungjawaban Kas Transparan - Juli 2026</p>
+          <p className="text-xs text-slate-500 font-medium mt-0.5">Ringkasan Laporan Pertanggungjawaban Kas Transparan - {currentPeriode}</p>
         </div>
 
         {/* Print / Export Action Buttons */}
