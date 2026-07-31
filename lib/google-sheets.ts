@@ -2,9 +2,13 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { JWT } from 'google-auth-library';
 
 // Inisialisasi Auth client
+const clientEmail = process.env.GOOGLE_SHEETS_CLIENT_EMAIL;
+const rawKey = process.env.GOOGLE_SHEETS_PRIVATE_KEY || '';
+const privateKey = rawKey.trim().replace(/^"/, '').replace(/"$/, '').replace(/\\n/g, '\n');
+
 const serviceAccountAuth = new JWT({
-  email: process.env.GOOGLE_SHEETS_CLIENT_EMAIL,
-  key: process.env.GOOGLE_SHEETS_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+  email: clientEmail,
+  key: privateKey,
   scopes: ['https://www.googleapis.com/auth/spreadsheets'],
 });
 
